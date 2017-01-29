@@ -12,17 +12,8 @@
 
 pthread_t tid;
 
-struct session;
-void effect_play(struct session *sess, float* const output0,
-		float* const output1, unsigned long nframes);
-void effect_src(struct session *sess, const float* const input0,
-		const float* const input1, unsigned long nframes);
-void effect_bypass(struct session *sess, float* const output0,
-		float* const output1, const float* const input0,
-		const float* const input1, unsigned long nframes);
-
-struct session* effect_session_start(void);
-int effect_session_stop(struct session *session);
+void effectlive_src(const float* const input0, const float* const input1,
+		unsigned long nframes);
 
 
 typedef enum {
@@ -38,7 +29,6 @@ typedef struct {
 	const float* input1;
 	float*       output0;
 	float*       output1;
-	struct session *sess;
 } Amp;
 
 bool running = false;
@@ -68,8 +58,6 @@ instantiate(const LV2_Descriptor*     descriptor,
 		pthread_create(&tid, NULL, (void*(*)(void*))&re_main, NULL);
 		running = true;
 	}
-
-	amp->sess = effect_session_start();
 
 	return (LV2_Handle)amp;
 }
@@ -118,10 +106,7 @@ run(LV2_Handle instance, uint32_t n_samples)
 	float* const       output0 = amp->output0;
 	float* const       output1 = amp->output1;
 
-	effect_src(amp->sess, input0, input1, n_samples);
-	effect_play(amp->sess, output0, output1, n_samples);
-	effect_bypass(amp->sess, output0, output1,
-			input0, input1, n_samples);
+	effectlive_src(input0, input1, n_samples);
 }
 
 static void
@@ -139,19 +124,17 @@ static void
 cleanup(LV2_Handle instance)
 {
 	Amp* amp = (Amp*)instance;
-	if (!effect_session_stop(amp->sess)) {
-		//re_cancel();
-		ua_stop_all(false);
-		//(void)pthread_join(tid, NULL);
-		sys_msleep(500);
-		ua_close();
-		re_cancel();
-		conf_close();
-		baresip_close();
-		mod_close();
-		libre_close();
-		running = false;
-	}
+	//re_cancel();
+	ua_stop_all(false);
+	//(void)pthread_join(tid, NULL);
+	sys_msleep(500);
+	ua_close();
+	re_cancel();
+	conf_close();
+	baresip_close();
+	mod_close();
+	libre_close();
+	running = false;
 
 	free(instance);
 }
