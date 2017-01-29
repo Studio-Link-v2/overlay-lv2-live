@@ -1,7 +1,7 @@
 #!/bin/bash -e
 
-gcc -g -Wall -shared -o studio-link-live.so -fPIC studio-link-live.c ../my_include/libbaresip_live.a \
+gcc -g -Wall -shared -o studio-link-onair.so -fPIC studio-link-onair.c ../my_include/libbaresip_onair.a \
     ../re/libre.a ../rem/librem.a ../opus/libopus.a -I../my_include \
      -lm -lpthread -lz -ldl -lresolv -lcrypt -lssl
 
-ldd studio-link-live.so
+ldd studio-link-onair.so

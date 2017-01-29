@@ -8,7 +8,7 @@
 #include "lv2/lv2plug.in/ns/lv2core/lv2.h"
 #include "baresip.h"
 
-#define STUDIOLINKLIVE_URI "http://studio-link.de/plugins/lv2/studio-link-live"
+#define STUDIOLINKONAIR_URI "http://studio-link.de/plugins/lv2/studio-link-onair"
 
 pthread_t tid;
 
@@ -163,7 +163,7 @@ extension_data(const char* uri)
 }
 
 static const LV2_Descriptor descriptor = {
-	STUDIOLINKLIVE_URI,
+	STUDIOLINKONAIR_URI,
 	instantiate,
 	connect_port,
 	activate,

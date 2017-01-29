@@ -4,9 +4,9 @@
 @prefix rdfs:  <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix units: <http://lv2plug.in/ns/extensions/units#> .
 
-<http://studio-link.de/plugins/lv2/studio-link-live>
+<http://studio-link.de/plugins/lv2/studio-link-onair>
         a lv2:Plugin ;
-        doap:name "Studio Link Live" ;
+        doap:name "Studio Link onAir" ;
         doap:license <http://opensource.org/licenses/BSD-3-Clause> ;
         lv2:optionalFeature lv2:hardRTCapable ;
         lv2:port [
