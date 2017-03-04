@@ -124,17 +124,20 @@ static void
 cleanup(LV2_Handle instance)
 {
 	Amp* amp = (Amp*)instance;
-	//re_cancel();
-	ua_stop_all(false);
-	//(void)pthread_join(tid, NULL);
-	sys_msleep(500);
-	ua_close();
-	re_cancel();
-	conf_close();
-	baresip_close();
-	mod_close();
-	libre_close();
-	running = false;
+
+	if (running) {
+		//re_cancel();
+		ua_stop_all(false);
+		//(void)pthread_join(tid, NULL);
+		sys_msleep(800);
+		ua_close();
+		re_cancel();
+		conf_close();
+		baresip_close();
+		mod_close();
+		libre_close();
+		running = false;
+	}
 
 	free(instance);
 }
